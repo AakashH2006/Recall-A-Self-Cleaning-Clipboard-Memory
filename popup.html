@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Recall</title>
+<link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Recall</span>
+        <button class="scan-btn" id="scanClipboardBtn" type="button" title="Check clipboard for a new copy (e.g. from the address bar)">
+          <span class="scan-icon" aria-hidden="true">↻</span> Check clipboard
+        </button>
+      </div>
+      <p class="scan-status" id="scanStatus" hidden></p>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab is-active" data-tab="recent" role="tab" aria-selected="true">Recent</button>
+        <button class="tab" data-tab="vault" role="tab" aria-selected="false">
+          Vault <span class="vault-count" id="vaultCount">0</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="panel is-active" id="panel-recent" data-panel="recent">
+        <div class="panel-empty" id="recentEmpty" hidden>
+          <p class="empty-title">Nothing copied yet</p>
+          <p class="empty-sub">Copy anything on a page — it'll show up here for 24 hours.</p>
+        </div>
+        <ul class="item-list" id="recentList"></ul>
+      </section>
+
+      <section class="panel" id="panel-vault" data-panel="vault">
+        <div class="panel-empty" id="vaultEmpty" hidden>
+          <p class="empty-title">Vault is empty</p>
+          <p class="empty-sub">Save important items here so they never expire.</p>
+        </div>
+        <ul class="item-list" id="vaultList"></ul>
+      </section>
+    </main>
+  </div>
+
+  <template id="recentItemTemplate">
+    <li class="item" data-id="">
+      <button class="item-head" type="button">
+        <span class="type-dot" aria-hidden="true"></span>
+        <span class="item-title" data-role="title"></span>
+        <span class="item-time" data-role="time"></span>
+        <span class="chev" aria-hidden="true">›</span>
+      </button>
+      <div class="expiry-track"><div class="expiry-fill" data-role="expiryFill"></div></div>
+      <div class="item-body" data-role="body" hidden>
+        <pre class="item-preview" data-role="preview"></pre>
+        <button class="item-source" data-role="source" type="button" hidden>
+          <span class="src-arrow" aria-hidden="true">↗</span>
+          <span data-role="sourceText"></span>
+        </button>
+        <div class="item-actions">
+          <button class="btn" data-action="copy">Copy</button>
+          <button class="btn btn-accent" data-action="save">Save to Vault</button>
+          <button class="btn btn-ghost" data-action="delete">Delete</button>
+        </div>
+      </div>
+    </li>
+  </template>
+
+  <template id="vaultItemTemplate">
+    <li class="item" data-id="">
+      <button class="item-head" type="button">
+        <span class="type-dot" aria-hidden="true"></span>
+        <span class="item-title" data-role="title" contenteditable="false"></span>
+        <span class="item-time" data-role="time"></span>
+        <span class="chev" aria-hidden="true">›</span>
+      </button>
+      <div class="item-body" data-role="body" hidden>
+        <pre class="item-preview" data-role="preview"></pre>
+        <button class="item-source" data-role="source" type="button" hidden>
+          <span class="src-arrow" aria-hidden="true">↗</span>
+          <span data-role="sourceText"></span>
+        </button>
+        <p class="nudge" data-role="nudge" hidden>Untouched for a week — keep it?</p>
+        <div class="item-actions">
+          <button class="btn" data-action="copy">Copy</button>
+          <button class="btn" data-action="rename">Rename</button>
+          <button class="btn btn-ghost" data-action="delete">Remove</button>
+        </div>
+      </div>
+    </li>
+  </template>
+
+  <script src="popup.js"></script>
+</body>
+</html>
